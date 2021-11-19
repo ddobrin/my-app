@@ -20,7 +20,7 @@ public class SpringNativeFunctionApplication {
     @Bean
     public Function<String, String> hello() {
         return (in) -> {
-            return "Hello: " + in + ", Source: " + target + " made a change";
+            return "Hello: " + in + ", Source: " + target + " - made a change";
         };
     }
 }
