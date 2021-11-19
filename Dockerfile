@@ -12,7 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM adoptopenjdk:11-jre-hotspot
+# FROM adoptopenjdk:11-jre-hotspot
+# ARG JAR_FILE=target/*.jar
+# COPY ${JAR_FILE} app.jar
+# ENTRYPOINT ["java","-jar","/app.jar"]
+
+
+FROM adoptopenjdk:11-jre-hotspot as builder
+WORKDIR application
+
+FROM maven:3.6.0-jdk-11-slim AS build
+COPY pom.xml /application/
+COPY src /application/src
+RUN mvn -f /application/pom.xml clean package
+
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
